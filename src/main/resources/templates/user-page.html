@@ -1,0 +1,15 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User-Page</title>
+</head>
+<body>
+<p id="m" class="fa fa-user-circle-o" th:text=" ${currentUser.name}"></p>
+
+<form  th:action="@{/user/logout}" method="post">
+    <button>Logout</button>
+</form>
+
+</body>
+</html>
