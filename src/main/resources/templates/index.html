@@ -1,54 +1,342 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en"  xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <link href="css/log-reg.css" rel="stylesheet">-->
+<!--    <title>Index</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="login-form">-->
+<!--    <form th:action="@{#}" th:object="${login_user}" method="post" id="myForm">-->
+<!--        <div class="form-group">-->
+<!--            <input type="email" name="email" required class="form-control" th:field="*{email}"  placeholder="Email" >-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <input type="password"  name="password" required class="form-control" th:field="*{password}"  placeholder="Password" >-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <label for="remember" style="text-decoration: #3b003b; size: 20px; color: black"> Remember me</label>-->
+<!--            <input id="remember" type="checkbox" name="remember-me" value="true"/>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <button type="submit" class="btn btn-rounded btn-primary btn-block">Login</button>-->
+<!--        </div>-->
+
+<!--        <div>-->
+<!--            <a href="page-register" class="btn btn-white-outline btn-block">Register</a>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
+
+
+<!--<div class="reg-form">-->
+<!--    <form    th:action="@{/user/register}" method="post" th:object="${user}">-->
+<!--        <div class="form-group">-->
+<!--            <input type="text" class="form-control" th:field="*{name}"  placeholder="name">-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <input type="text" class="form-control" th:field="*{surname}"  placeholder="surname">-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <input type="number" class="form-control" th:field="*{age}"  placeholder="age">-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <input type="email" class="form-control" th:field="*{email}" placeholder="email">-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <input type="password" id="password" class="form-control" th:field="*{password}" placeholder="password">-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <button type="submit" class="btn btn-rounded btn-primary btn-block">Register</button>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        html,body{
+            display: grid;
+            height: 100%;
+            width: 100%;
+            place-items: center;
+            background: -webkit-linear-gradient(left, #a445b2, #fa4299);
+        }
+        ::selection{
+            background: #fa4299;
+            color: #fff;
+        }
+        .wrapper{
+            overflow: hidden;
+            max-width: 390px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
+        }
+        .wrapper {
+            display: flex;
+            width: 200%;
+        }
+        .wrapper .title{
+            width: 50%;
+            font-size: 35px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+        }
+        .wrapper .slide-controls{
+            position: relative;
+            display: flex;
+            height: 50px;
+            width: 100%;
+            overflow: hidden;
+            margin: 30px 0 10px 0;
+            justify-content: space-between;
+            border: 1px solid lightgrey;
+            border-radius: 5px;
+        }
+        .slide-controls .slide{
+            height: 100%;
+            width: 100%;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 500;
+            text-align: center;
+            line-height: 48px;
+            cursor: pointer;
+            z-index: 1;
+            transition: all 0.6s ease;
+        }
+        .slide-controls label.signup{
+            color: #000;
+        }
+        .slide-controls .slider-tab{
+            position: absolute;
+            height: 100%;
+            width: 50%;
+            left: 0;
+            z-index: 0;
+            border-radius: 5px;
+            background: -webkit-linear-gradient(left, #a445b2, #fa4299);
+            transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+        }
+        input[type="radio"]{
+            display: none;
+        }
+        #signup:checked ~ .slider-tab{
+            left: 50%;
+        }
+        #signup:checked ~ label.signup{
+            color: #fff;
+            cursor: default;
+            user-select: none;
+        }
+        #signup:checked ~ label.login{
+            color: #000;
+        }
+        #login:checked ~ label.signup{
+            color: #000;
+        }
+        #login:checked ~ label.login{
+            cursor: default;
+            user-select: none;
+        }
+        .wrapper .form-container{
+            width: 100%;
+            overflow: hidden;
+        }
+        .form-container .form-inner{
+            display: flex;
+            width: 200%;
+        }
+        .form-container .form-inner form{
+            width: 50%;
+            transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+        }
+        .form-inner form .field{
+            height: 50px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .form-inner form .field input{
+            height: 100%;
+            width: 100%;
+            outline: none;
+            padding-left: 15px;
+            border-radius: 5px;
+            border: 1px solid lightgrey;
+            border-bottom-width: 2px;
+            font-size: 17px;
+            transition: all 0.3s ease;
+        }
+        .form-inner form .field input:focus{
+            border-color: #fc83bb;
+            /* box-shadow: inset 0 0 3px #fb6aae; */
+        }
+        .form-inner form .field input::placeholder{
+            color: #999;
+            transition: all 0.3s ease;
+        }
+        form .field input:focus::placeholder{
+            color: #b3b3b3;
+        }
+
+        .form-inner form .signup-link{
+            text-align: center;
+            margin-top: 30px;
+        }
+        .form-inner form .pass-link a,
+        .form-inner form .signup-link a{
+            color: #fa4299;
+            text-decoration: none;
+        }
+        .form-inner form .pass-link a:hover,
+        .form-inner form .signup-link a:hover{
+            text-decoration: underline;
+        }
+        form .btn{
+            height: 50px;
+            width: 100%;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+        form .btn .btn-layer{
+            height: 100%;
+            width: 300%;
+            position: absolute;
+            left: -100%;
+            background: -webkit-linear-gradient(right, #a445b2, #fa4299, #a445b2, #fa4299);
+            border-radius: 5px;
+            transition: all 0.4s ease;;
+        }
+        form .btn:hover .btn-layer{
+            left: 0;
+        }
+        form .btn input[type="submit"]{
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+            position: relative;
+            background: none;
+            border: none;
+            color: #fff;
+            padding-left: 0;
+            border-radius: 5px;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+    </style>
+
 </head>
+
 <body>
-<div class="login-form">
-    <form action="/login" th:object="${login_user}" method="post" id="myForm">
-        <div class="form-group">
-            <input type="email" name="email" required class="form-control" th:field="*{email}"  placeholder="Email" >
+<div class="wrapper">
+    <div class="form-container">
+        <div class="slide-controls">
+            <input type="radio" name="slide" id="login" checked>
+            <input type="radio" name="slide" id="signup">
+            <label for="login" class="slide login">Login</label>
+            <label for="signup" class="slide signup">Signup</label>
+            <div class="slider-tab"></div>
         </div>
-        <div class="form-group">
-            <input type="password" name="password" required class="form-control" th:field="*{password}"  placeholder="Password" >
-        </div>
-        <div class="form-group">
-            <label for="remember" style="text-decoration: #3b003b; size: 20px; color: black"> Remember me</label>
-            <input id="remember" type="checkbox" name="remember-me" value="true"/>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-rounded btn-primary btn-block">Login</button>
-        </div>
+        <div class="form-inner">
+            <form th:action="@{#}" th:object="${login_user}" method="post" class="login">
+                <div class="field">
+                    <input type="email" name="email" required class="form-control" th:field="*{email}" placeholder="Email">
+                </div>
+                <div class="field">
+                    <input type="password" name="password" required class="form-control" th:field="*{password}" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="remember" style="text-decoration: #3b003b; size: 20px; color: black"> Remember me</label>
+                    <input id="remember" type="checkbox" name="remember-me" value="true" />
+                </div>
 
-        <div>
-            <a href="page-register" class="btn btn-white-outline btn-block">Register</a>
+                <div class="field btn">
+                    <div class="btn-layer"></div>
+                    <button type="submit" class="btn btn-rounded btn-primary btn-block">Login</button>
+                </div>
+
+                <div class="signup-link">
+                    Not a member? <a href="page-register" class="btn btn-white-outline btn-block">Register</a>
+                </div>
+            </form>
+
+
+
+
+            <form th:action="@{/user/register}" method="post" th:object="${user}" class="signup">
+                <div class="field">
+                    <input type="text" class="form-control" th:field="*{name}" placeholder="name">
+                </div>
+                <div class="field">
+                    <input type="text" class="form-control" th:field="*{surname}" placeholder="surname">
+                </div>
+                <div class="field">
+                    <input type="number" id="age" class="form-control" th:field="*{age}" placeholder="age">
+                </div>
+                <div class="field">
+                    <input type="email" class="form-control" th:field="*{email}" placeholder="email">
+                </div>
+                <div class="field">
+                    <input type="password" id="password" class="form-control" th:field="*{password}" placeholder="password">
+                </div>
+                <div class="field">
+                    <input type="password" placeholder="Confirm password" required>
+                </div>
+                <div class="field btn">
+                    <button type="submit" id="reg" class="btn btn-rounded btn-primary btn-block" onclick="checkPassword()" >Register</button>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
 
+<script>
+    const loginText = document.querySelector(".title-text .login");
+    const loginForm = document.querySelector("form.login");
+    const loginBtn = document.querySelector("label.login");
+    const signupBtn = document.querySelector("label.signup");
+    const signupLink = document.querySelector("form .signup-link a");
+    signupBtn.onclick = (()=>{
+        loginForm.style.marginLeft = "-50%";
+        loginText.style.marginLeft = "-50%";
+    });
+    loginBtn.onclick = (()=>{
+        loginForm.style.marginLeft = "0%";
+        loginText.style.marginLeft = "0%";
+    });
+    signupLink.onclick = (()=>{
+        signupBtn.click();
+        return false;
+    });
 
-<div class="reg-form">
-    <form    th:action="@{/user/register}" method="post" th:object="${user}">
-        <div class="form-group">
-            <input type="text" class="form-control" th:field="*{name}"  placeholder="name">
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control" th:field="*{surname}"  placeholder="surname">
-        </div>
-        <div class="form-group">
-            <input type="number" class="form-control" th:field="*{age}"  placeholder="age">
-        </div>
-        <div class="form-group">
-            <input type="email" class="form-control" th:field="*{email}" placeholder="email">
-        </div>
-        <div class="form-group">
-            <input type="password" id="password" class="form-control" th:field="*{password}" placeholder="password">
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-rounded btn-primary btn-block">Register</button>
-        </div>
-    </form>
-</div>
+    // function checkPassword(){
+    //     let password=document.getElementById("password").value;
+    //     let camelCaseRegExp = /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*-]).{12,}/;
+    //     if(camelCaseRegExp.test(password)){
+    //         console.log("SUCCESS");
+    //         return;
+    //     }
+    //     console.log("INVALID");
+    //     return;
+    //}
+</script>
 </body>
+
 </html>

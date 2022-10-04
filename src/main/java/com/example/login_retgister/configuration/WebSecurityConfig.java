@@ -20,6 +20,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+
     @Autowired
     @Qualifier("currentUserDetailServiceImpl")
     private UserDetailsService userDetailsService;
@@ -32,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
 //                .antMatchers("/seeMessages").hasAnyAuthority("user") //example
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -50,7 +51,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .deleteCookies("JSESSIONID")
                 .and()
                 .rememberMe()
-                .tokenValiditySeconds(2*604800) // 1 week
+//                .tokenValiditySeconds(2*604800) // 1 week
+                .tokenValiditySeconds(3000) // 1 week
                 .and();
     }
     @Override
