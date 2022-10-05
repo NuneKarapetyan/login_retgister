@@ -1,10 +1,13 @@
 package com.example.login_retgister.models;
 
+import com.example.login_retgister.models.enums.Role;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -37,17 +40,38 @@ public class User {
     @Column
     private int age;
 
+    @Column
+    private boolean nonLocked;
+
+    @OneToMany(mappedBy = "author")
+    private Set<Article> articles;
+
+
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "user_interests",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "interest_id")}
+    )
+    private List<Interest> interests;
+
+
     @Column(columnDefinition = "VARCHAR(256)")
     private String activationToken;
 
     @Column
-    private LocalDateTime created;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
 
     @Column
+    private String image;
+
+    @Column
+    private LocalDateTime created;
+
+    @Column
     private LocalDateTime activationDate;
-
-
 
     @Column
     private LocalDateTime updated;
@@ -55,6 +79,7 @@ public class User {
 
     @PrePersist
     public void onCreate() {
+        this.nonLocked = true;
         this.created = LocalDateTime.now();
         this.updated = created;
     }

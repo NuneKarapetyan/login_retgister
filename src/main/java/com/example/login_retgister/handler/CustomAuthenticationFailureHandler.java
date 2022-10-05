@@ -20,5 +20,6 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         if(exception.getClass().isAssignableFrom(BadCredentialsException.class)){
             response.sendRedirect("/login?loginError=bad-credentials&email="+request.getParameter("email")+"&password="+request.getParameter("password"));
         }
+
     }
 }

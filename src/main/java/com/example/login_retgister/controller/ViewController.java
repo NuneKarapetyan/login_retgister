@@ -23,7 +23,6 @@ public class ViewController {
                             @RequestParam(value = "error", required = false)String error) {
         map.addAttribute("login_user", new User());
         map.addAttribute("user", new User());
-        System.out.println("error :"+error);
         return "index";
     }
 

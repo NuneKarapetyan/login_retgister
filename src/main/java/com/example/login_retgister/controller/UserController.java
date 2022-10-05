@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 
@@ -24,8 +25,10 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public String register(@ModelAttribute User user) {
-        return "redirect:/login?regInfo=" + userService.save(user);
+    public String register(@ModelAttribute User user,
+                           RedirectAttributes redirectAttributes) {
+        redirectAttributes.addAttribute("regInfo", userService.save(user));
+        return "redirect:/login";
     }
 
 //    @GetMapping("/activate")
