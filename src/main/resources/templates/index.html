@@ -280,7 +280,7 @@
 
 
 
-            <form th:action="@{/user/register}" method="post" th:object="${user}" class="signup">
+            <form th:action="@{/user/register}" method="post" th:object="${user}" class="signup" enctype="multipart/form-data">
                 <div class="field">
                     <input type="text" class="form-control" th:field="*{name}" placeholder="name">
                 </div>
@@ -298,6 +298,10 @@
                 </div>
                 <div class="field">
                     <input type="password" placeholder="Confirm password" required>
+                </div>
+
+                <div class="field">
+                    <input type="file" name="avatar" placeholder="Choose your image" required>
                 </div>
                 <div class="field btn">
                     <button type="submit" id="reg" class="btn btn-rounded btn-primary btn-block" onclick="checkPassword()" >Register</button>

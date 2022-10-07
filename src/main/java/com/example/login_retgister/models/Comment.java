@@ -23,7 +23,6 @@ public class Comment {
     @Column(name = "id")
     private int id;
 
-
     @Column
     private String content;
 
@@ -34,8 +33,6 @@ public class Comment {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="article_id", nullable=false)
     private Article article;
-
-
 
 
     @Column

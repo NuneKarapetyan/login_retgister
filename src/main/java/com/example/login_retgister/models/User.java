@@ -43,11 +43,11 @@ public class User {
     @Column
     private boolean nonLocked;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
     private Set<Article> articles;
 
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_interests",
             joinColumns = {@JoinColumn(name = "user_id")},
