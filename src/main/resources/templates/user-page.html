@@ -6,11 +6,38 @@
 </head>
 <body>
 <p id="m" class="fa fa-user-circle-o" th:text=" ${currentUser.name}"></p>
-<p id="current_user_surname" class="fa fa-user-circle-o" th:text=" ${currentUser.surname}" ></p>
-<img th:src="@{${'/user/image/' + currentUser.image}}" width="200", height="300">
-<form  th:action="@{/user/logout}" method="post">
+<p id="current_user_surname" class="fa fa-user-circle-o" th:text=" ${currentUser.surname}"></p>
+<img th:src="@{${'/user/image/' + currentUser.image}}" width="200" , height="300">
+<form th:action="@{/user/logout}" method="post">
     <button>Logout</button>
 </form>
 
+
+<div class="add-article"></div>
+<p>Add article:</p>
+<form th:action="@{/article}" th:object="${article}" method="post">
+    <select th:field="*{interest}">
+        <option th:each="inter : ${interests}" th:value="${inter.id}" th:text="${inter.name}">
+        </option>
+    </select>
+    <input placeholder="Title" type="text" th:field="*{title}">
+    <textarea placeholder="Context" type="text" th:field="*{content}"/>
+    <button>Add article</button>
+</form>
+
+<div th:if="${myArticles.size()!=0}">
+    <p>My articles:</p>
+<table>
+    <thead>
+    <th>Title</th>
+    <th>Content</th>
+    </thead>
+    <tr th:each="article: ${myArticles}">
+        <td style="visibility: hidden" th:text="${article.id}" />
+        <td th:text="${article.title}" />
+        <td th:text="${article.content}" />
+    </tr>
+</table>
+</div>
 </body>
 </html>

@@ -1,9 +1,12 @@
 package com.example.login_retgister.controller;
 
 
+import com.example.login_retgister.models.Article;
 import com.example.login_retgister.models.User;
 import com.example.login_retgister.repositories.UserRepository;
 import com.example.login_retgister.security.CurrentUser;
+import com.example.login_retgister.serivce.ArticleService;
+import com.example.login_retgister.serivce.InterestService;
 import com.example.login_retgister.serivce.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +34,8 @@ public class UserController {
 
     private final UserService userService;
     private final UserRepository userRepository;
+    private final InterestService interestService;
+    private final ArticleService articleService;
 
     @Value("${user.image.path}")
     private String userImagesFolder;
@@ -61,6 +66,9 @@ public class UserController {
         CurrentUser currentUser = (CurrentUser) userDetails;
         if (currentUser != null) {
             modelMap.addAttribute("currentUser", userRepository.findByEmail(currentUser.getUser().getEmail()).get());
+            modelMap.addAttribute("article", new Article());
+            modelMap.addAttribute("interests", interestService.allInterests());
+            modelMap.addAttribute("myArticles", articleService.articlesByAuthor(currentUser.getUser()));
             return "user-page";
         } else {
             return "redirect:/login?errorMsg=Invalid credentials";

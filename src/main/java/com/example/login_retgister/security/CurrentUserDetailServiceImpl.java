@@ -17,7 +17,17 @@ import java.util.Optional;
 public class CurrentUserDetailServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private  UserRepository userRepository;
+
+//    @Autowired
+//    public CurrentUserDetailServiceImpl(UserRepository userRepository) {
+//        this.userRepository = userRepository;
+//    }
+
+//    @Autowired
+//    public void setUserRepository(UserRepository userRepository){
+//        this.userRepository=userRepository;
+//    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

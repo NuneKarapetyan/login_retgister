@@ -23,7 +23,7 @@ public class Interest {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
     @Column
     private LocalDateTime created;

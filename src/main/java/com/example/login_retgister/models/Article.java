@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Builder
 @ToString
 @AllArgsConstructor
@@ -30,7 +31,7 @@ public class Article {
     @Column
     private String content;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn(name="author_id", nullable=false)
     private User author;
 
