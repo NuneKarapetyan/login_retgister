@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>User-Page</title>
+    <style>
+        table, td, th {
+            border: 1px solid red;
+            text-align: center;
+            padding: 8px;
+        }
+    </style>
 </head>
 <body>
 <p id="m" class="fa fa-user-circle-o" th:text=" ${currentUser.name}"></p>
@@ -27,17 +34,25 @@
 
 <div th:if="${myArticles.size()!=0}">
     <p>My articles:</p>
-<table>
-    <thead>
-    <th>Title</th>
-    <th>Content</th>
-    </thead>
-    <tr th:each="article: ${myArticles}">
-        <td style="visibility: hidden" th:text="${article.id}" />
-        <td th:text="${article.title}" />
-        <td th:text="${article.content}" />
-    </tr>
-</table>
+    <table>
+        <thead>
+        <th>Title</th>
+        <th>Content</th>
+        </thead>
+        <tr th:each="article: ${myArticles}">
+            <!--        <td style="visibility: hidden" th:text="${article.id}" />-->
+            <td th:text="${article.title}"/>
+            <td th:text="${article.content}"/>
+            <td>
+                <form th:object="${comment}" method="post" th:action="@{/comment}">
+                    <textarea placeholder="Content" th:field="*{content}"/>
+                    <input type="hidden" th:name="articleId" th:value="${article.id}">
+                    <button>Add comment</button>
+
+                </form>
+            </td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>

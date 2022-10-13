@@ -21,8 +21,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/admin")
+public class AdminController {
 
     private final UserService userService;
     private final UserRepository userRepository;
@@ -33,46 +33,18 @@ public class UserController {
     private String userImagesFolder;
 
 
-    @PostMapping("/register")
-    public String register(@ModelAttribute User user,
-                           @RequestPart(name = "avatar") MultipartFile userAvatar,
-                           RedirectAttributes redirectAttributes) {
-        redirectAttributes.addAttribute("regInfo", userService.save(user, userAvatar));
-        return "redirect:/login";
-    }
 
 
-    @GetMapping(value = "/activate")
-    public String verify(ModelMap modelMap,
-                         @RequestParam("token") String token,
-                         @RequestParam("email") String email) {
 
-
-     return userService.verify(modelMap, token, email);
-    }
 
 
     @GetMapping("/home")
     public String userHome(ModelMap modelMap,
                            @AuthenticationPrincipal UserDetails userDetails) {
-        CurrentUser currentUser = (CurrentUser) userDetails;
-        if (currentUser != null) {
-            modelMap.addAttribute("currentUser", userRepository.findByEmail(currentUser.getUser().getEmail()).get());
-            modelMap.addAttribute("article", new Article());
-            modelMap.addAttribute("interests", interestService.allInterests());
-            modelMap.addAttribute("myArticles", articleService.articlesByAuthor(currentUser.getUser()));
-            modelMap.addAttribute("comment", new Comment());
-            return "user-page";
-        } else {
-            return "redirect:/login?errorMsg=Invalid credentials";
-        }
+            return "admin-page";
     }
 
 
-    @PostMapping("/logout")
-    public String logout(){
-        return "index";
-    }
 
 
 //    @GetMapping("/image/{imageName}")
