@@ -2,6 +2,7 @@ package com.example.login_retgister.handler;
 
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
@@ -19,6 +20,9 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         }
         if(exception.getClass().isAssignableFrom(BadCredentialsException.class)){
             response.sendRedirect("/login?loginError=bad-credentials&email="+request.getParameter("email")+"&password="+request.getParameter("password"));
+        }
+        if(exception.getClass().isAssignableFrom(LockedException.class)){ //todo for students
+
         }
 
     }

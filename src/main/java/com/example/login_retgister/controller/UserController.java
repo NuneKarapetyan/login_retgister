@@ -11,6 +11,7 @@ import com.example.login_retgister.serivce.InterestService;
 import com.example.login_retgister.serivce.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -53,6 +54,7 @@ public class UserController {
 
 
     @GetMapping("/home")
+    @PreAuthorize("hasAuthority('USER')")
     public String userHome(ModelMap modelMap,
                            @AuthenticationPrincipal UserDetails userDetails) {
         CurrentUser currentUser = (CurrentUser) userDetails;
@@ -69,9 +71,13 @@ public class UserController {
     }
 
 
-    @PostMapping("/logout")
-    public String logout(){
-        return "index";
+    @PostMapping("/status")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String changeUserStatus(@RequestParam(name = "status")boolean status,
+                                   @RequestParam(name = "userId")int useId){
+        userService.changeUserStatus(status, useId);
+        return "redirect:/admin/home";
+
     }
 
 

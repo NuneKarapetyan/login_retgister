@@ -15,7 +15,7 @@
 <p id="m" class="fa fa-user-circle-o" th:text=" ${currentUser.name}"></p>
 <p id="current_user_surname" class="fa fa-user-circle-o" th:text=" ${currentUser.surname}"></p>
 <img th:src="@{${'/user/image/' + currentUser.image}}" width="200" , height="300">
-<form th:action="@{/user/logout}" method="post">
+<form th:action="@{/logout}" method="post">
     <button>Logout</button>
 </form>
 
